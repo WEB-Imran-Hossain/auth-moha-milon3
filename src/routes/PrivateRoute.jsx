@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { Navigate } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 const PrivateRoute = ({ children }) => {
 
@@ -18,3 +19,7 @@ const PrivateRoute = ({ children }) => {
 };
 
 export default PrivateRoute;
+
+PrivateRoute.PropTypes = {
+    children: PropTypes.node
+}

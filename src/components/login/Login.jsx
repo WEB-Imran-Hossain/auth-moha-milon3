@@ -1,10 +1,11 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
-    const { signInUser } = useContext(AuthContext)
-
+    const { signInUser, signInWithGoogle } = useContext(AuthContext)
+    // after reset form field using
+    const navigate = useNavigate();
 
 
     // event handler
@@ -17,6 +18,11 @@ const Login = () => {
         signInUser(email, password)
             .then(result => {
                 console.log(result.user);
+                // form field reset using
+                e.target.reset();
+                // switching to home page after login
+                navigate('/');
+
             })
             .catch(error => {
                 console.error(error)
@@ -25,6 +31,17 @@ const Login = () => {
 
 
     }
+
+    const handleGoogleSignIn = () => {
+        signInWithGoogle()
+        .then(result=>{
+            console.log(result.user);
+        })
+        .catch(error=>{
+            console.error(error)
+        })
+    }
+
 
     return (
         <div className="hero min-h-screen">
@@ -71,6 +88,10 @@ const Login = () => {
                         {/* page toggle */}
                         <p>
                             New here? <Link to={"/register"}><button className="btn btn-link capitalize">Register</button></Link>
+                        </p>
+                        <button onClick={handleGoogleSignIn} className="btn btn-ghost capitalize">Google</button>
+                        <p>
+
                         </p>
                     </div>
                 </div>
